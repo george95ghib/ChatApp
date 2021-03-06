@@ -38,6 +38,13 @@ namespace ChatApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult CreateRoom(string roomName)
+        {
+            _homeService.CreateRoom(roomName, User.Identity.Name);
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Chat(int id)
         {

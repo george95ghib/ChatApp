@@ -12,6 +12,12 @@ namespace ChatApp.Services
             _chatAppRepo = chatAppRepo;
         }
 
+        public void CreateRoom(string roomName, string userName)
+        {
+            var userId = _chatAppRepo.GetUserId(userName);
+            _chatAppRepo.CreateRoom(roomName, userId);
+        }
+
         public Chat GetChat(int id)
         {
             return _chatAppRepo.GetChat(id);

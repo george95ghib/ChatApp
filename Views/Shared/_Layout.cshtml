@@ -18,15 +18,7 @@
         <div class="side-menu">
             @if(User.Identity.IsAuthenticated)
             {
-                <a class="room-button" href="#">
-                    Room
-                </a>
-                <a class="room-button" href="@Url.Action("CreateRoom", "Home")">
-                    <strong>+</strong>
-                </a>
-                <a class="room-button" href="@Url.Action("Logout", "Account")">
-                    Logout
-                </a>
+                <vc:room></vc:room>
             }
             else
             {
