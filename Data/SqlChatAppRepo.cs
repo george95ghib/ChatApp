@@ -44,5 +44,12 @@ namespace ChatApp.Data
         {
             return _context.Chats.Include(m => m.Messages).FirstOrDefault(x => x.Id == id);
         }
+
+        public IEnumerable<Chat> GetAllRooms()
+        {
+            var rooms = _context.Chats.Where(x => x.Type == ChatType.Room).ToList();
+
+            return rooms;
+        }
     }
 }

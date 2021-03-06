@@ -1,18 +1,23 @@
 using System.Threading.Tasks;
+using ChatApp.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatApp.ViewComponents
 {
     public class RoomViewComponent : ViewComponent
     {
-        public RoomViewComponent()
+
+        // Need to be changed. Maybe add service layer!!
+        private readonly IChatAppRepo _sqlChatApp;
+
+        public RoomViewComponent(IChatAppRepo sqlChatApp)
         {
-            // to be implemented
+            _sqlChatApp = sqlChatApp;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync()
+        public IViewComponentResult Invoke()
         {
-            return View();
+            return View(_sqlChatApp.GetAllRooms());
         }
     }
 }

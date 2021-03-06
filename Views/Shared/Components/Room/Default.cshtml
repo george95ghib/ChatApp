@@ -1,6 +1,13 @@
-<a class="room-button" href="#">
-    Room
-</a>
+@model IEnumerable<Chat>
+
+
+@foreach(var chat in Model)
+{
+    <a class="room-button" href="#">
+        @chat.Name
+    </a>
+}
+
 <a class="room-button" href="@Url.Action("CreateRoom", "Home" )">
     <strong>+</strong>
 </a>

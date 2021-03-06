@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ChatApp.Models;
 
 namespace ChatApp.Data
@@ -8,5 +9,7 @@ namespace ChatApp.Data
         void CreateRoom(string roomName, string userId);
         string GetUserId(string userId);
         User GetUser(string userId);
+        IEnumerable<Chat> GetAllRooms();
+        
     }
 }
