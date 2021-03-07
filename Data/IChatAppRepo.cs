@@ -10,6 +10,7 @@ namespace ChatApp.Data
         string GetUserId(string userId);
         User GetUser(string userId);
         IEnumerable<Chat> GetAllRooms();
+        void UpdateDatabase();
         
     }
 }

@@ -51,5 +51,10 @@ namespace ChatApp.Data
 
             return rooms;
         }
+
+        public void UpdateDatabase()
+        {
+            _context.SaveChanges();
+        }
     }
 }

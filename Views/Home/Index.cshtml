@@ -1,6 +1,6 @@
 @model Chat
 
-<div class="chat-body">
+<div class="chat-body" id="chat-body">
     @foreach(var message in Model.Messages)
     {
         <div class="message">
@@ -10,8 +10,12 @@
         </div>
     }
 </div>
-<form class="chat-input" asp-controller="Home" asp-action="SendMessage">
-    <input type="hidden" name="chat" value="@Model">
+<form class="chat-input" method="post" asp-controller="Home" asp-action="SendMessage">
+    <input type="hidden" id="chatId" name="chatId" value="@Model.Id">
     <input type="text" name="message" id="message-input">
-    <button type="submit">Send</button>
+    <button type="submit" id="sendButton">Send</button>
 </form>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/js/chat.js"></script>

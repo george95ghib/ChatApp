@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ChatApp.Data;
+using ChatApp.Hubs;
 using ChatApp.Models;
 using ChatApp.Services;
 using Microsoft.AspNetCore.Builder;
@@ -32,12 +33,12 @@ namespace ChatApp
 
             services.AddScoped<IHomeService, HomeService>();
 
-            services.AddDbContext<ChatAppContext>( opt =>
-            {
-                opt.UseSqlServer(Configuration.GetConnectionString("ChatAppConnection"));
-            });
+            services.AddDbContext<ChatAppContext>(opt =>
+           {
+               opt.UseSqlServer(Configuration.GetConnectionString("ChatAppConnection"));
+           });
 
-            services.AddIdentity<User, IdentityRole>(opt => 
+            services.AddIdentity<User, IdentityRole>(opt =>
             {
                 opt.Password.RequireDigit = false;
                 opt.Password.RequiredLength = 4;
@@ -45,7 +46,10 @@ namespace ChatApp
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequireLowercase = false;
 
-            }).AddEntityFrameworkStores<ChatAppContext>();
+            }).AddEntityFrameworkStores<ChatAppContext>()
+              .AddDefaultTokenProviders();
+
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,10 +61,17 @@ namespace ChatApp
 
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
 
             app.UseMvcWithDefaultRoute();
-            
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("/chatHub");
+            });
+
         }
     }
 }

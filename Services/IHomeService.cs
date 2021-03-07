@@ -6,5 +6,7 @@ namespace ChatApp.Services
     {
         Chat GetChat(int id);
         void CreateRoom(string roomName, string userName);
+        void BuildMessage(int chatId, string message, string userName);
+        void UpdateDatabase();
     }
 }

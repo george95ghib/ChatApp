@@ -18,8 +18,6 @@ namespace ChatApp.Controllers
             _signInManager = signInManager;
         }
 
-        
-
         [HttpGet]
         public IActionResult Register()
         {
@@ -61,19 +59,22 @@ namespace ChatApp.Controllers
         {
             if(String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
             {
-                return View();
+                return View("Login");
             }
 
-            var user = new User
-            {
-                UserName = username
-            };
 
-            var login = await _signInManager.PasswordSignInAsync(user.UserName, password, false, false);
+            var user = await _userManager.FindByNameAsync(username);
+
+            if(user == null)
+            {
+                return View("Login");
+            }
+            var login = await _signInManager.PasswordSignInAsync(user, password, false, false);
 
             if(login.Succeeded)
             {                
-                return RedirectToAction("Index", "Home");
+                Console.WriteLine("User logged: {0}", user.UserName.ToString());
+                return RedirectToAction("Index", "Home", new {id = 1});
             }
 
             return View("Login");

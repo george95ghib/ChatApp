@@ -1,32 +1,43 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using ChatApp.Hubs;
 using ChatApp.Models;
 using ChatApp.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ChatApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IHomeService _homeService;
+        private readonly IHubContext<ChatHub> _hubContext;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(IHomeService homeService, IHubContext<ChatHub> hubContext)
         {
             _homeService = homeService;
+            _hubContext = hubContext;
         }
 
         // GET requested chat
-        [Authorize]
         [HttpGet]
         public IActionResult Index(int id)
         {
-            if(id == 0)
+            
+            if (id == 0)
             {
                 id = 1;
             }
 
             var chat = _homeService.GetChat(id);
+
+            if(chat == null)
+            {
+                return NotFound();
+            }
 
             return View(chat);
             
@@ -45,23 +56,13 @@ namespace ChatApp.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Chat(int id)
-        {
-            if(id == 0)
-            {
-                id = 1;
-            }
-
-            var chat = _homeService.GetChat(id);
-
-            return View(chat);
-        }
-
         [HttpPost]
         public IActionResult SendMessage(int chatId, string message)
         {
-            return View();
+
+            _homeService.BuildMessage(chatId, message, User.Identity.Name);
+
+            return NoContent();
         }
     }
 }
