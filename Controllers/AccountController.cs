@@ -62,7 +62,6 @@ namespace ChatApp.Controllers
                 return View("Login");
             }
 
-
             var user = await _userManager.FindByNameAsync(username);
 
             if(user == null)
@@ -73,7 +72,6 @@ namespace ChatApp.Controllers
 
             if(login.Succeeded)
             {                
-                Console.WriteLine("User logged: {0}", user.UserName.ToString());
                 return RedirectToAction("Index", "Home", new {id = 1});
             }
 
@@ -86,7 +84,7 @@ namespace ChatApp.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login");
+            return RedirectToAction(nameof(Login));
         }
     }
 }

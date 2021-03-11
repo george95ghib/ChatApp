@@ -52,6 +52,21 @@ body {
   text-align: center;
 }
 
+.room-button-join {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.75rem 13rem 0;
+    height: 68px;
+    border-radius: 5px;
+    box-shadow: 0 0px 1px 0px #999;
+    background-color: #2E7EC9;
+    text-align: center;
+    min-width: 400px;
+  }
+
 .logout {
     background-color: #A65E66;
 }
@@ -69,6 +84,10 @@ body {
 }
 
 .room-button:hover {
+    box-shadow: 0 2px 3px 1px #555;
+}
+
+.room-button-join:hover {
     box-shadow: 0 2px 3px 1px #555;
 }
 

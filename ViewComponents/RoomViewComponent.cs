@@ -6,8 +6,6 @@ namespace ChatApp.ViewComponents
 {
     public class RoomViewComponent : ViewComponent
     {
-
-        // Need to be changed. Maybe add service layer!!
         private readonly IChatAppRepo _sqlChatApp;
 
         public RoomViewComponent(IChatAppRepo sqlChatApp)
@@ -17,7 +15,7 @@ namespace ChatApp.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            return View(_sqlChatApp.GetAllRooms());
+            return View(_sqlChatApp.GetJoinedRooms(User.Identity.Name));
         }
     }
 }

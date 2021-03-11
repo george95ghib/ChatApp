@@ -50,6 +50,8 @@ namespace ChatApp
               .AddDefaultTokenProviders();
 
             services.AddSignalR();
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

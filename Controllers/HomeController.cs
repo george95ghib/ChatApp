@@ -14,33 +14,30 @@ namespace ChatApp.Controllers
     public class HomeController : Controller
     {
         private readonly IHomeService _homeService;
-        private readonly IHubContext<ChatHub> _hubContext;
 
-        public HomeController(IHomeService homeService, IHubContext<ChatHub> hubContext)
+        public HomeController(IHomeService homeService)
         {
             _homeService = homeService;
-            _hubContext = hubContext;
         }
 
-        // GET requested chat
         [HttpGet]
-        public IActionResult Index(int id)
+        public IActionResult Index()
         {
-            
-            if (id == 0)
-            {
-                id = 1;
-            }
+            return View(_homeService.GetNotJoinedRooms(User.Identity.Name));
+        }
 
-            var chat = _homeService.GetChat(id);
+        [HttpGet]
+        public IActionResult AddToChat(int chatId)
+        {
+            _homeService.AddToChat(User.Identity.Name, chatId);
 
-            if(chat == null)
-            {
-                return NotFound();
-            }
+            return RedirectToAction(nameof(Index));
+        }
 
-            return View(chat);
-            
+        [HttpGet]
+        public IActionResult Chat(int chatId)
+        {
+            return View(_homeService.GetChat(chatId));
         }
 
         [HttpGet]
@@ -59,9 +56,7 @@ namespace ChatApp.Controllers
         [HttpPost]
         public IActionResult SendMessage(int chatId, string message)
         {
-
             _homeService.BuildMessage(chatId, message, User.Identity.Name);
-
             return NoContent();
         }
     }

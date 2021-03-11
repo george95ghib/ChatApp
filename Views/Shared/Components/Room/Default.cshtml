@@ -1,12 +1,8 @@
 @model IEnumerable<Chat>
 
-<a class="room-button" href="@Url.Action("Index", "Home", new {id = 1})">
-        Public Room
-</a>
-
 @foreach(var chat in Model)
 {
-    <a class="room-button" href="@Url.Action("Index", "Home", new {id = chat.Id})">
+    <a class="room-button joinRoom" id="@chat.Id"  href="@Url.Action("Chat", "Home", new {chatId = chat.Id} )">
         @chat.Name
     </a>
 }
@@ -17,3 +13,5 @@
 <a class="room-button logout" href="@Url.Action("Logout", "Account" )">
     Logout
 </a>
+
+

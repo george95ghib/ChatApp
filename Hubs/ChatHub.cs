@@ -7,10 +7,14 @@ namespace ChatApp.Hubs
 {
     public class ChatHub : Hub
     {
-        public async Task SendMessage(Message message)
+        public async Task JoinChat(string chatId)
         {
-           // Console.WriteLine(message);
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
         }
+
+        public async Task LeaveChat(string chatId)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
+        } 
     }
 }
